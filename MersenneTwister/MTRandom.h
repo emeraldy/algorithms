@@ -17,15 +17,15 @@
 
 class MTRandom
 {
-	private:
-		unsigned int rseed;
-		unsigned long mt[CMATH_N];//the array for the state vector
-		int mti; //mti==N+1 means mt[N] isn't initialised
+private:
+    unsigned int rseed;
+    unsigned long mt[CMATH_N];//the array for the state vector
+    int mti; //mti==N+1 means mt[N] isn't initialised
 
-	public:
-		MTRandom();
-		unsigned int RandomInt(unsigned int n);
-		void setRandomSeed(unsigned int n);
-		unsigned int getRandomeSeed();
-		void Randomise();
+public:
+    MTRandom();
+    unsigned int RandomInt(unsigned int n);
+    void setRandomSeed(unsigned int n);
+    unsigned int getRandomeSeed();
+    void Randomise();
 };
