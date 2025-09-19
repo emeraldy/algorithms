@@ -1,3 +1,4 @@
+#include <memory>
 #include "MergeSort.h"
 
 void MergeSort(int* data, int begin, int end, int order)
@@ -15,13 +16,17 @@ void Sort(int* data, int head, int mid, int tail, int order)
 {
     int sizeFirstHalf = mid - head + 1;
     int sizeSecondHalf = tail - (mid + 1) + 1;
-    int* tempFirstHalf = new int[sizeFirstHalf];//temporary store for the data in question
-    int* tempSecondHalf = new int[sizeSecondHalf];
+    std::shared_ptr<int[]> firstHalf(new int[sizeFirstHalf]);
+    std::shared_ptr<int[]> secondHalf(new int[sizeSecondHalf]);
     //copy the data in question to the temporary store
     for (int i = head, j = 0; i <= mid; i++, j++)
-        tempFirstHalf[j] = data[i];
+    {
+        firstHalf[j] = data[i];
+    }
     for (int i = mid + 1, j = 0; i <= tail; i++, j++)
-        tempSecondHalf[j] = data[i];
+    {
+        secondHalf[j] = data[i];
+    }
 
 
     //sort in ascending order
@@ -32,27 +37,27 @@ void Sort(int* data, int head, int mid, int tail, int order)
     {
         if (order == ASCEND)
         {
-            if (tempFirstHalf[indexTempFirst] > tempSecondHalf[indexTempSecond])
+            if (firstHalf[indexTempFirst] > secondHalf[indexTempSecond])
             {
-                data[indexData] = tempSecondHalf[indexTempSecond];
+                data[indexData] = secondHalf[indexTempSecond];
                 indexTempSecond++;
             }
             else
             {
-                data[indexData] = tempFirstHalf[indexTempFirst];
+                data[indexData] = firstHalf[indexTempFirst];
                 indexTempFirst++;
             }
         }
         else
         {
-            if (tempFirstHalf[indexTempFirst] < tempSecondHalf[indexTempSecond])
+            if (firstHalf[indexTempFirst] < secondHalf[indexTempSecond])
             {
-                data[indexData] = tempSecondHalf[indexTempSecond];
+                data[indexData] = secondHalf[indexTempSecond];
                 indexTempSecond++;
             }
             else
             {
-                data[indexData] = tempFirstHalf[indexTempFirst];
+                data[indexData] = firstHalf[indexTempFirst];
                 indexTempFirst++;
             }
         }
@@ -63,18 +68,19 @@ void Sort(int* data, int head, int mid, int tail, int order)
         {
             //copy the remaining of second half back to data
             for (; indexTempSecond < sizeSecondHalf; indexTempSecond++, indexData++)
-                data[indexData] = tempSecondHalf[indexTempSecond];
+            {
+                data[indexData] = secondHalf[indexTempSecond];
+            }
             break;
         }
         else if (indexTempSecond == sizeSecondHalf)//second half reaches sentinel
         {
             //copy the remaining of first half back to data
             for (; indexTempFirst < sizeFirstHalf; indexTempFirst++, indexData++)
-                data[indexData] = tempFirstHalf[indexTempFirst];
+            {
+                data[indexData] = firstHalf[indexTempFirst];
+            }
             break;
         }
     }
-
-    delete[] tempFirstHalf;
-    delete[] tempSecondHalf;
 }

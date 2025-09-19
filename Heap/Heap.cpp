@@ -1,5 +1,6 @@
-#include"Heap.h"
 #include<iostream>
+#include"Heap.h"
+
 using namespace std;
 
 /*Definition for HeapNode*/
@@ -71,7 +72,9 @@ void Heap::build(int keys[], int s, bool isMax)
 
     //maintain heap property
     for (int i = size / 2; i >= 1; i--)
+    {
         heapify(i);
+    }
 }
 
 bool Heap::getHeapType()
@@ -202,7 +205,9 @@ HeapNode* Heap::parent(int index)
     {
         HeapNode* current = root;
         for (int i = 1; i < index / 2; i++)//heap index starting with 1
+        {
             current = current->next;
+        }
 
         return current;
     }
@@ -224,7 +229,9 @@ HeapNode* Heap::left(int index)
     {
         HeapNode* current = root;
         for (int i = 1; i < index * 2; i++)//heap index starting with 1
+        {
             current = current->next;
+        }
 
         return current;
     }
@@ -246,7 +253,9 @@ HeapNode* Heap::right(int index)
     {
         HeapNode* current = root;
         for (int i = 1; i < index * 2 + 1; i++)//heap index starting with 1
+        {
             current = current->next;
+        }
 
         return current;
     }
@@ -261,13 +270,17 @@ void Heap::heapify(int index)
     rIndex = index * 2 + 1;
     largestIndex = index;
     if (index < 1 || index > size || (lIndex > size && rIndex > size))//invalid index or leaf
+    {
         return;
+    }
     //locate current node and its children
     l = left(index);
     r = right(index);//it is possible that right child doesn't exist!!!
     current = root;
     for (int i = 1; i < index; i++)//heap index starting with 1
+    {
         current = current->next;
+    }
 
     if (isMaxHeap)
     {
@@ -299,7 +312,9 @@ void Heap::heapify(int index)
             }
         }
         if (largestIndex != index)//there was key swapping
+        {
             heapify(largestIndex);
+        }
     }
     else//is a min heap
     {
@@ -331,7 +346,9 @@ void Heap::heapify(int index)
             }
         }
         if (largestIndex != index)//there was key swapping
+        {
             heapify(largestIndex);
+        }
     }
 }
 
@@ -342,7 +359,9 @@ int Heap::extractRoot()
     //locate the last node
     HeapNode* current = root;
     while (current->next != 0)
+    {
         current = current->next;
+    }
 
     //swap the last node's key with root key
     root->key = current->key;
@@ -372,13 +391,19 @@ void Heap::append(int k)
     //locate the last node
     HeapNode* current = root;
     while (current->next != 0)
+    {
         current = current->next;
+    }
 
     //append a new node
     if (isMaxHeap)
+    {
         current->next = new HeapNode(-2147483648);//least number of an int
+    }
     else
+    {
         current->next = new HeapNode(2147483647);//greatest number of an int
+    }
     current->next->previous = current;
     size++;
 
